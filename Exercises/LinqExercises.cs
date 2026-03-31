@@ -16,7 +16,9 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task01_StudentsFromWarsaw()
     {
-        throw NotImplemented(nameof(Task01_StudentsFromWarsaw));
+        return UniversityData.Students
+            .Where(s => s.City == "Warsaw")
+            .Select(s => $"{s.IndexNumber} | {s.FirstName} {s.LastName} | {s.City}");
     }
 
     /// <summary>
@@ -30,7 +32,8 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task02_StudentEmailAddresses()
     {
-        throw NotImplemented(nameof(Task02_StudentEmailAddresses));
+        return UniversityData.Students
+            .Select(s => s.Email);
     }
 
     /// <summary>
@@ -45,7 +48,10 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task03_StudentsSortedAlphabetically()
     {
-        throw NotImplemented(nameof(Task03_StudentsSortedAlphabetically));
+        return UniversityData.Students
+            .OrderBy(s => s.LastName)
+            .ThenBy(s => s.FirstName)
+            .Select(s => $"{s.IndexNumber} | {s.FirstName} {s.LastName}");
     }
 
     /// <summary>
@@ -60,7 +66,11 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task04_FirstAnalyticsCourse()
     {
-        throw NotImplemented(nameof(Task04_FirstAnalyticsCourse));
+        var course = UniversityData.Courses
+            .Where(c => c.Category == "Analytics")
+            .Select(c => $"{c.Title} (Start: {c.StartDate:yyyy-MM-dd})")
+            .FirstOrDefault();
+        return new[] { course ?? "No Analytics courses found." };
     }
 
     /// <summary>
@@ -77,7 +87,8 @@ public sealed class LinqExercises
     /// </summary>
     public IEnumerable<string> Task05_IsThereAnyInactiveEnrollment()
     {
-        throw NotImplemented(nameof(Task05_IsThereAnyInactiveEnrollment));
+        var hasInactive = UniversityData.Enrollments.Any(e => !e.IsActive);
+        return new[] { hasInactive ? "Yes" : "No" };
     }
 
     /// <summary>
